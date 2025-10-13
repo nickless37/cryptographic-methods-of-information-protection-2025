@@ -1,0 +1,20 @@
+from Crypto.Cipher import ARC4  #ARC4 - алгоритм RC4 без авторського права та бренду
+
+Email = "dtimokhin"
+text = Email.encode('utf-8') 
+# у RC4 текст не має обмежень по довжені, тому не треба обрізати або доповнювати текст як у минулій роботі 
+
+
+def TaskOne():
+    key = bytes.fromhex("0123456789ABCDEF0123456789ABCDEF") # unhexlify має той же ефект, що і bytes.fromhex
+    CipherType = ARC4.new(key)
+    cipherText = CipherType.encrypt(text)
+    print("result:", cipherText.hex())
+
+    # перевірка
+    # decipher = ARC4.new(key)   #Для розшифрування треба створювати новий об'єкт, бо у цьому шифрі об'єкт шифру змінюється при використанні
+    # decrypted = decipher.decrypt(cipherText)
+    # print("Decrypted:", decrypted.decode())
+
+print("Task 1")
+TaskOne()
