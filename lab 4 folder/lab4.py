@@ -1,5 +1,6 @@
 from Crypto.Cipher import ARC4  #ARC4 - алгоритм RC4 без авторського права та бренду
 from Crypto.Cipher import Salsa20
+import random
 
 Email = "dtimokhin"
 text = Email.encode('utf-8') 
@@ -34,3 +35,40 @@ print("Task 1")
 TaskOne()
 print("Task 2")
 TaskTwo()
+
+
+#/////////////////////////////////////////////////
+
+class strumok:
+    #так як розробка шифру "струмок" відповідно до стандартів криптостійкості можна прирівняти до дипломної роботи, я спробую написати значно спрощенну, менш стійку версію, що повторює принцип
+    
+    def KeyStreamGenerator(key: str, length: int) -> bytes:
+        #у цій функції ключ перетворюється у потік байтів за певним алгоритмом. я використаю генератор псевдовипадкових чисел з сідом, але оригіінальний шифр значно складніший.
+        random.seed(key) #ініціалізація рандомайзера
+        return bytes([random.randint(0,255) for _ in range(length)]) #повертає список байтів(зі значенням від 0 до 255), у якому кількість байтів відповідає довжині тексту
+
+    def encrypt(Text: str , key: str) -> bytes:
+        TextByte = Text.encode('utf-8') #перетворення тексту в байти як і в минулих завданнях
+        stream = strumok.KeyStreamGenerator(key, len(TextByte)) #виклик функції створення потокового ключа
+        ciphered = bytes([b ^ s for b, s in zip(TextByte, stream)]) #b ^ s  -- попарна операція XOR над байтами тексту(b) та потоковим ключем(s), одна з двох основних частин шифру(друга- це створення потокового ключа), zip створює пари байтів з двох списків, структура for b, s in надає значення пар змінним та виконує операцію для всіх створених у zip пар. завершує шифрування функція bytes, яка переносить отриманий список в формат байтів, пайтон бере на себе багато перетворень без потреби в їх прописанні, якщо в інакшому випадку можлива помилка, наприклад при операціях міг змінитися формат чисел та списку
+        return ciphered
+
+    def decrypt(CipheredText: bytes, key: str) -> str:
+        stream = strumok.KeyStreamGenerator(key, len(CipheredText)) #виклик функції створення потокового ключа
+        TextByte = bytes([c ^ s for c, s in zip(CipheredText, stream)]) #операція XOR. вона обернена сама до себе, тому тут змін робити не треба. потоковий ключ буде тим же, бо random.seed створює псевдовипадковий результат, тобто при одному сиді(кеу) буде один результат
+        return TextByte.decode('utf-8', errors='ignore') #перетворення байтів в текст з ігноруванням помилок
+
+def StrumokTest():
+
+    #тест
+    PlainText = "перевірка шифру з використанням кирилиці"
+    Key = "Keyword"
+
+
+    print("Початковий текст:",PlainText, "key:", Key)
+    STText = strumok.encrypt(PlainText, Key)
+    print(STText)
+    DecText = strumok.decrypt(STText, Key)
+    print(DecText)
+
+StrumokTest()
