@@ -20,10 +20,27 @@ def expected_collisions(m: int, N: int) -> float:
 
 #1.1
 m1 = 365
+
+print("\n1.1")
 for N in [23,50]:
     exact = birthday_exact(m1, N)
     approx = birthday_approx(m1, N)
     expected = expected_collisions(m1, N)
+    print(f"\n-Birthday paradox (m={m1}, N={N})-")
+    print(f"Exact probability    = {exact:.10f} ({exact*100:.3f}%)")
+    print(f"Approx probability  = {approx:.10f} ({approx*100:.3f}%)")
+    print(f"Expected collisions = {expected:.6f}")
+
+#1.2
+m2 = 2 ** 160
+N2 = 10 ** 24
+
+print("\n1.2")
+approx2= birthday_approx(m2, N2)
+expected2 = expected_collisions(m2, N2)
+print(f"\n(m=2^160, N=10^24)")
+print(f"Approx probability  = {approx2:.10f} ({approx2*100:.3f}%)")
+print(f"Expected collisions = {expected2:.6f}")
 
 
 
@@ -38,6 +55,7 @@ EmailHash2 = hashlib.md5(Email2.encode('utf-8'))
 HashDigets =''.join(f'{byte:08b}' for byte in EmailHash.digest())
 HashDigets2 =''.join(f'{byte:08b}' for byte in EmailHash2.digest())
 
+print("\n2.1")
 print("Email Hash:", EmailHash.hexdigest())
 print("Email2 Hash:", EmailHash2.hexdigest())
 
@@ -57,5 +75,6 @@ def sha256_file(path, chunk_size=8192): #функція для 2.2   #chunk_size
 
 FilePath = "lab 5 folder\src\AES.pdf"
 HashValue = sha256_file(FilePath)
+print("\n2.2")
 print(f"SHA-256: {HashValue}")
 
