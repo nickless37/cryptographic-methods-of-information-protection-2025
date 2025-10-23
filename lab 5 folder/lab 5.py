@@ -1,4 +1,33 @@
 import hashlib
+import math
+
+#використані формули наведені у директорії formulas
+def birthday_exact(m: int, N: int) -> float:
+    # точна ймовірність хача б 1 колізії через формулу 1
+    p_no = 1.0
+    for k in range(N):
+        p_no *= (1 - k / m)
+    return 1 - p_no
+
+def birthday_approx(m: int, N: int) -> float:
+    # приблизна ймовірність хача б 1 колізії через формулу 2 (наближення)
+    return 1 - math.exp(-N * (N - 1) / (2 * m))
+
+def expected_collisions(m: int, N: int) -> float:
+    # очікувана кількість колізій через формулу 3
+    return N * (N - 1) / (2 * m)
+
+
+#1.1
+m1 = 365
+for N in [23,50]:
+    exact = birthday_exact(m1, N)
+    approx = birthday_approx(m1, N)
+    expected = expected_collisions(m1, N)
+
+
+
+#//////////////////////ex2
 
 Email = "dtimokhin"
 Email2 = "xtimokhin"
