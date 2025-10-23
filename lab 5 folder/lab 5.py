@@ -17,4 +17,16 @@ print(HashDigets2)
 
 difference = sum(bit1 != bit2 for bit1, bit2 in zip(HashDigets, HashDigets2))
 
-print (difference , "out of 128")
+print (difference , "out of 128")  #приблизно половина
+
+def sha256_file(path, chunk_size=8192): #функція для 2.2   #chunk_size- розмір блоку, який буде оборблено за раз при створенні кешу, що використовується для уникнення переповнення RAM, зазвичай 8Кб / 8192б, не впливає на результат 
+    sha256 = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(chunk_size), b""):
+            sha256.update(chunk)
+    return sha256.hexdigest()
+
+FilePath = "lab 5 folder\src\AES.pdf"
+HashValue = sha256_file(FilePath)
+print(f"SHA-256: {HashValue}")
+
