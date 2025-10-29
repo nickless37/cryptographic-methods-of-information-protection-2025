@@ -9,16 +9,7 @@ B = 45
 ciphertext_hex = "febe49ef11b07faaec4a1c77cc5ab5f1bd8c4967d68092e6bd6ea8f9e928ef6f"
 ciphertext = bytes.fromhex(ciphertext_hex)
 
-print("=== SHAMIR'S THREE-PASS PROTOCOL SOLUTION ===")
-
-# We found: 201^69 ≡ 45 mod 257
-# This means in Shamir's protocol:
-# x1 = m^a = 201
-# x2 = m^(ab) = (m^a)^b = 201^b = 45
-# So b = 69
-
 b = 69
-print(f"Bob's private key b = {b}")
 
 # Now we need to find Alice's private key a
 # We know: x1 = m^a = 201

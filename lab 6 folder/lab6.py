@@ -103,7 +103,11 @@ Ciphertext = "febe49ef11b07faaec4a1c77cc5ab5f1bd8c4967d68092e6bd6ea8f9e928ef6f"
 # keyA = Logarithm(APVal, 257 , 3) 
 
 # Secret = pow(BPVal, keyA, p2)
-Secret = 45 # отримано брутфорсом в іншому файлі
+
+#useless
+
+
+Secret = 45 # отримано брутфорсом в інших файлах, описано у logic.md
 
 shared_secret_str = str(Secret)
 Secret_bytes = shared_secret_str.encode('utf-8')
