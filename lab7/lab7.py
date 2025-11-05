@@ -176,9 +176,29 @@ def Q3():
     main()
         
 
+def Q4():
+    p = 17
+    g = 3
+    x = 5 
+    m = 7
+    k = 4
+    
 
+    y = pow(g,x,p)
 
+    c1 = pow(g,k,p)
 
+    c2 = m * pow(y,k,p) % p
+
+    # m2 = c2 * pow(c1**x, -1,p)       x
+    c1_1 = pow(c1,x,p)
+    c1_2 = pow(c1_1,-1,p)
+    m2 = (c2*c1_2)%p
+
+    print("m1=", m,"m2=",m2)
+
+    print(f"\npublic key component: y=",y)
+    print(f"\nciphertext pair: c1 =",c1,"c2=",c2)
 
 
 
@@ -186,4 +206,5 @@ def Q3():
 
 # Q1()
 # Q2()
-Q3()
+#Q3()
+Q4()
