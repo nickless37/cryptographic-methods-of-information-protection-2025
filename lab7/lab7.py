@@ -29,6 +29,7 @@ def Q1():
     # print(n,fn,c,d,m2)
 
     print("task 1:")
+    print("d=",d)
     print("c=",c,"m=",m2)
 
 
@@ -173,6 +174,7 @@ def Q3():
         except Exception as e:
             print(f"Decryption error: {e}")
 
+    print(f"\nTask 3")
     main()
         
 
@@ -195,6 +197,7 @@ def Q4():
     c1_2 = pow(c1_1,-1,p)
     m2 = (c2*c1_2)%p
 
+    print(f"\nTask 4")
     print("m1=", m,"m2=",m2)
 
     print(f"\npublic key component: y=",y)
@@ -204,7 +207,7 @@ def Q4():
 
 
 
-# Q1()
-# Q2()
-#Q3()
+Q1()
+Q2()
+Q3()
 Q4()
