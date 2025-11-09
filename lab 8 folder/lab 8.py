@@ -2,7 +2,7 @@ import base64
 from pathlib import Path
 from Crypto.PublicKey import RSA
 from Crypto.Signature import pkcs1_15
-from Crypto.Hash import SHA256
+from Crypto.Hash import SHA256, HMAC
 
 # IMAGE_PATH = Path("./src/tux-72.png")           path error
 # MODIFIED_IMAGE_PATH = Path("./src/ImageModified.png")
@@ -25,7 +25,9 @@ h = SHA256.new(image_data)
 signature = pkcs1_15.new(priv_key).sign(h)
 signature_b64 = base64.b64encode(signature).decode('utf-8')
 
-print("підпис (Base64):")
+print("Task 1")
+
+print("signature (Base64):")
 print(signature_b64)
 
 try:
@@ -44,3 +46,25 @@ try:
     print("Verification Success (modified image) — unexpected")
 except (ValueError, TypeError):
     print("Verification Failed (modified image) — as expected.")
+    #в результаті навіть найменшої зміни при порівнянні файлів алгоритм бачить відмінність і не може верифікувати 
+
+
+key = bytes.fromhex("5c8cd96c1749adb5f9ba379cfc546ec90d2b82dc927f6067dd444fb20e73ef32")
+
+def compute_hmac(path: Path) -> str:
+    data = path.read_bytes()
+    hmac_obj = HMAC.new(key, digestmod=SHA256)
+    hmac_obj.update(data)
+    return hmac_obj.hexdigest()
+
+original_hmac = compute_hmac(IMAGE_PATH)
+modified_hmac = compute_hmac(MODIFIED_IMAGE_PATH)
+
+print("task2")
+print("\noriginal hmac =", original_hmac)
+print("\nmodified hmac =", modified_hmac)
+
+if original_hmac == modified_hmac:  #ймовірно я неправильно зрозумів завдання, але я не знайшов іншого способу перевірки
+    print("verification success, task error")
+else:
+    print("verification error, task success")
