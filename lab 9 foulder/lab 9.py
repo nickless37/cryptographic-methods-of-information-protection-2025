@@ -1,6 +1,6 @@
 # Elliptic Curve: y^2 = x^3 + x  over F_43
  
-print ("\ntask1")
+print ("\ntask 1")
 
 p = 43
 
@@ -51,3 +51,5 @@ Q = (5, 1)
 R = point_add(P, Q)
 
 print("\n(4,5) + (5,1) =", R)
+
+print ("\ntask 2")
