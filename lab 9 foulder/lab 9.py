@@ -1,3 +1,4 @@
+from pathlib import Path
 # Elliptic Curve: y^2 = x^3 + x  over F_43
  
 print ("\ntask 1")
@@ -53,3 +54,42 @@ R = point_add(P, Q)
 print("\n(4,5) + (5,1) =", R)
 
 print ("\ntask 2")
+
+
+from Crypto.Hash import SHA256
+from Crypto.PublicKey import ECC
+from Crypto.Signature import DSS
+
+SCRIPT_DIR = Path(__file__).parent
+
+PRIVATE_KEY_FILE = SCRIPT_DIR / "src" / "privkey.der"
+
+# PRIVATE_KEY_FILE = "privkey.der" на момент першого тесту файл було розташовано у тій же категорії, що і програма.  
+
+with open(PRIVATE_KEY_FILE, "rb") as f:
+    key = ECC.import_key(f.read())
+
+message = b"Write me: d.timokin_FIT_13_23_b_d@knute.edu.ua" 
+
+
+h = SHA256.new(message)
+
+signer = DSS.new(key, "deterministic-rfc6979")
+signature = signer.sign(h)
+
+
+print("\nSignature (hex):", signature.hex())
+
+def checkup():
+    from Crypto.Signature import DSS
+
+    pub_key = key.public_key()
+    verifier = DSS.new(pub_key, "deterministic-rfc6979")
+
+    try:
+        verifier.verify(h, signature)
+        print("test passed")
+    except ValueError:
+        print("erro")
+
+# checkup()
